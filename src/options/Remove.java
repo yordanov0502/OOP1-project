@@ -14,7 +14,7 @@ import javax.swing.*;
 
 public class Remove extends Component implements bg.tu_varna.sit.Remove{
     @Override
-    public void remove(String productName, double quantity, Map<Location, Product> productList) throws MissingProductException
+    public boolean remove(String productName, double quantity, Map<Location, Product> productList) throws MissingProductException
     {
         Map<LocalDate, Product> unsortedMap = new LinkedHashMap<>();
 
@@ -113,7 +113,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
                     else if (quantity > totalQuantity)
                     {
-                        int response = JOptionPane.showConfirmDialog(this, "The total quantity of the product is " + totalQuantity + "\nHowever, do you want to remove the left quantity?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        int response = JOptionPane.showConfirmDialog(this, "The total quantity of the product \""+i.getValue().getProductName()+"\" is " + totalQuantity + "\nHowever, do you want to remove the left quantity?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                         if (response == JOptionPane.YES_OPTION)
                         {
@@ -127,7 +127,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
                             System.out.println("---------------------------------------------------------------------------------------------");
                             break;
                         }
-                        else {break;}
+                        else {return true;}
                     }
 
                     else {flag1=true;}
@@ -188,7 +188,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
 
         }
-
+     return false;
     }
 
     public static boolean isNullOrEmptyMap(Map <? , ?> map)

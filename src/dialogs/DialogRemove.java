@@ -42,9 +42,10 @@ public class DialogRemove extends JFrame{
                     if(validateDialogRemove.validateAll(attributes))
                     {
                         boolean flag=true;
+                        boolean optionNo=false;
                         try
                         {
-                            remove.remove(name.getText(), Double.parseDouble(quantity.getText()), warehouse.getProductList());
+                            optionNo = remove.remove(name.getText(), Double.parseDouble(quantity.getText()), warehouse.getProductList());
                         }
                         catch (MissingProductException customException)
                         {
@@ -52,9 +53,14 @@ public class DialogRemove extends JFrame{
                             JOptionPane.showMessageDialog(removeButton, (customException).getMessage());
                         }
 
-                        if(flag)
+                        if(flag && !optionNo)
                         {
                             JOptionPane.showMessageDialog(removeButton, "Operation \"remove\" has been successful.");
+                            dispose();
+                        }
+
+                        else if(flag && optionNo)
+                        {
                             dispose();
                         }
                     }
