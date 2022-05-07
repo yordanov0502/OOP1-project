@@ -17,25 +17,25 @@ public class Clean implements bg.tu_varna.sit.Clean {
         else
         {
             org.joda.time.LocalDate currDate = org.joda.time.LocalDate.now(); //Current date
-            Map<Location, Product> removedProducts = new HashMap<>();
+            Map<Location, Product> cleanedProducts = new HashMap<>();
 
             for (Map.Entry<Location, Product> i : productList.entrySet())
             {
-                if (currDate.compareTo(i.getValue().getExpiryDate()) > 0)
+                if (currDate.compareTo(i.getValue().getExpiryDate()) > 0 || currDate.compareTo(i.getValue().getExpiryDate().minusDays(7)) >= 0)
                 {
-                    removedProducts.put(i.getKey(), i.getValue());
+                    cleanedProducts.put(i.getKey(), i.getValue());
                 }
             }
 
 
-            if (removedProducts.isEmpty()) {System.out.println("All products in the warehouse are up to date!");}
+            if (cleanedProducts.isEmpty()) {System.out.println("All products in the warehouse are up to date!");}
 
             else
             {
-                productList.keySet().removeAll(removedProducts.keySet());
+                productList.keySet().removeAll(cleanedProducts.keySet());
 
                 System.out.println("------------------The following products have been cleaned from the warehouse----------------");
-                for (Map.Entry<Location, Product> i : removedProducts.entrySet())
+                for (Map.Entry<Location, Product> i : cleanedProducts.entrySet())
                 {
                     System.out.println(i.getValue().removeInfo());
                 }

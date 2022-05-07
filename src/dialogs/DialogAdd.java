@@ -26,7 +26,7 @@ public class DialogAdd extends JFrame{
     private JButton addButton;
     private JPanel panelAdd;
 
-    private ValidateAttributes validate = new ValidateAttributes();
+    private ValidateDialogAdd validateDialogAdd = new ValidateDialogAdd();
 
     private Add add = new options.Add();
 
@@ -34,6 +34,12 @@ public class DialogAdd extends JFrame{
 
 
     public DialogAdd(Warehouse warehouse)  {
+
+        setContentPane(panelAdd);
+        setTitle("Please add product");
+        setBounds(700, 200, 500, 570);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         preventBreaking();
 
@@ -48,7 +54,7 @@ public class DialogAdd extends JFrame{
                                        comment.getText()};
 
 
-                       if(validate.validateAll(attributes))
+                       if(validateDialogAdd.validateAll(attributes))
                        {
                            Location location = new Location(sector.getText(), Integer.parseInt(shelf.getText()), Integer.parseInt(number.getText()));
 
@@ -71,7 +77,11 @@ public class DialogAdd extends JFrame{
                            if(flag)
                            {
                            JOptionPane.showMessageDialog(addButton, name.getText() + " has been added to the warehouse successfully.");
+                           dispose();
                            }
+
+
+
                        }
             }
         });

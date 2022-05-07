@@ -1,6 +1,8 @@
 package bg.tu_varna.sit;
 
 import dialogs.DialogAdd;
+import dialogs.DialogRemove;
+import dialogs.ValidateDialogRemove;
 import еxceptions.OptionException;
 
 import javax.swing.*;
@@ -38,13 +40,13 @@ public class GeneralMenu implements Menu {
 
             case "add": addProduct();break;
 
-            //case "remove"
+            case "remove": removeProduct();break;
 
             //case "log"
 
             case "clean": clean();break;
 
-            default: throw new OptionException("Invalid Option!");
+            default: throw new OptionException("Invalid option!");
         }
     }
 
@@ -134,15 +136,21 @@ public class GeneralMenu implements Menu {
 
     private void addProduct()
     {
-        DialogAdd dialog = new DialogAdd(warehouse);
-        dialog.setContentPane(dialog.getPanelAdd());
-        dialog.setTitle("Please add product");
-        dialog.setBounds(700, 200, 500, 570);
-        dialog.setVisible(true);
-        dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        DialogAdd dialogAdd = new DialogAdd(warehouse);
     }
 
-    ///////////////////
+    private void removeProduct()
+    {
+        ValidateDialogRemove checkWarehouse = new ValidateDialogRemove();
+
+        if(checkWarehouse.isNullOrEmptyMap(warehouse.getProductList()))
+        {
+            System.out.println("There are no products in the warehouse!");
+        }
+
+        else {DialogRemove dialogRemove = new DialogRemove(warehouse);}
+
+    }
 
     ///////////////////
 

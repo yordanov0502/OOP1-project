@@ -7,14 +7,13 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
 
 @XmlRootElement(name = "Location")
-@XmlType(propOrder = { "sector", "shelf","number","capacity"})
+@XmlType(propOrder = { "sector", "shelf","number"})
 
 public class Location {
 
     private String sector;
     private int shelf;
     private int number;
-    private double capacity=0;
 
     public Location(String sector, int shelf, int number) {
         this.sector = sector;
@@ -52,15 +51,6 @@ public class Location {
         this.number = number;
     }
 
-    @XmlAttribute
-    public double getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(double capacity) {
-        this.capacity = capacity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,21 +65,23 @@ public class Location {
     }
 
     @Override
-    public String toString() {
-        return "{" +
-                "sector='" + sector + '\'' +
-                ", shelf=" + shelf +
-                ", number=" + number +
-                ", capacity=" + capacity +
-                "/1000}";
-    }
-
-    public String shortInfo() {
+    public String toString()
+    {
         return "{" +
                 "sector='" + sector + '\'' +
                 ", shelf=" + shelf +
                 ", number=" + number +
                 "}";
     }
-}
 
+    public String fullInfo(Double quantity) {
+        return "{" +
+                "sector='" + sector + '\'' +
+                ", shelf=" + shelf +
+                ", number=" + number +
+                ", capacity=" + quantity +
+                "/1000}";
+    }
+
+
+}

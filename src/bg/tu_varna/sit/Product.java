@@ -126,7 +126,7 @@ public class Product {
                 "\n\t\t\t  manufacturer='" + manufacturer + '\'' +
                 "\n\t\t\t  unit='" + unit + '\'' +
                 "\n\t\t\t  quantity=" + quantity +
-                "\n\t\t\t  location" + location.shortInfo() +
+                "\n\t\t\t  location" + location.fullInfo(getQuantity()) +
                 "\n\t\t\t  comment='" + comment + '\'' +
                 "\n";
     }
@@ -139,7 +139,7 @@ public class Product {
                 "\n\t\t\t  manufacturer='" + manufacturer + '\'' +
                 "\n\t\t\t  unit='" + unit + '\'' +
                 "\n\t\t\t  quantity=" + quantity +
-                "\n\t\t\t  location" + location.shortInfo() +
+                "\n\t\t\t  location" + location +
                 "\n\t\t\t  comment='" + comment + '\'' +
                 "\n";
     }
