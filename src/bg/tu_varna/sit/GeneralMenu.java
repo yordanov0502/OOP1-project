@@ -40,7 +40,7 @@ public class GeneralMenu implements Menu {
 
             case "remove": removeProduct();break;
 
-            //case "log"
+            case "log": log(options);break;
 
             case "clean": clean();break;
 
@@ -153,7 +153,24 @@ public class GeneralMenu implements Menu {
         else {DialogRemove dialogRemove = new DialogRemove(warehouse);}
     }
 
-    ///////////////////
+    private void log(String[] parameters)throws OptionException
+    {
+        if(parameters.length!=2) {throw new OptionException("Incorrect parameters!");}
+
+        String[] dates = parameters[1].split(" ");
+
+        if(dates.length!=2) {{throw new OptionException("Incorrect parameters!");}}
+
+         if(warehouse.getProductList()==null || warehouse.getProductList().isEmpty())
+        {
+            System.out.println("There are no products in the warehouse!");
+        }
+
+        else
+        {
+           System.out.println(dates[0]+" "+dates[1]);//////////////////////////////////
+        }
+    }
 
     private void clean()
     {

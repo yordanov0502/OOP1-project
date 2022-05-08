@@ -12,11 +12,17 @@ public class Warehouse {
 
     private Map<Location,Product> productList = new LinkedHashMap<>();
 
+    private StorageHistory storageHistory;
+
     public Map<Location,Product> getProductList() {
         return productList;
     }
 
     public void setProductList(Map<Location, Product> productList) {this.productList = productList;}
+
+    public StorageHistory getStorageHistory() {return storageHistory;}
+
+    public void setStorageHistory(StorageHistory storageHistory) {this.storageHistory = storageHistory;}
 
     @Override
     public String toString() {
