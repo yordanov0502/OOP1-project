@@ -100,6 +100,7 @@ public class ValidateDialogAdd {
 
         org.joda.time.LocalDate currDate = org.joda.time.LocalDate.now(); //Current date
         org.joda.time.LocalDate entryDae = org.joda.time.LocalDate.parse(date);
+
         if(currDate.compareTo(entryDae) < 0)
         {
             throw new DateException("You are not allowed to enter \"entry date\"\nwhich has not passed yet!");

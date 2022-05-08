@@ -3,22 +3,18 @@ package options;
 import bg.tu_varna.sit.Location;
 import bg.tu_varna.sit.Product;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Print implements bg.tu_varna.sit.Print {
     @Override
     public void print(Map<Location,Product> productList)
     {
-        Map<String,Double> availableProducts = new HashMap<>();
-
-        if(isNullOrEmptyMap(productList))
-        {
-            System.out.println("There are no products in the warehouse!");
-        }
+        if(productList == null || productList.isEmpty()) {System.out.println("There are no products in the warehouse!");}
 
         else
         {
+            Map<String,Double> availableProducts = new LinkedHashMap<>();
 
             for(Map.Entry<Location, Product> i: productList.entrySet())
             {
@@ -39,16 +35,13 @@ public class Print implements bg.tu_varna.sit.Print {
                 }
             }
 
+            System.out.println("\n-------------------------------------------------------");
             for(Map.Entry<String, Double> i: availableProducts.entrySet())
             {
-                System.out.println("product= "+i.getKey()+"/ quantity= "+i.getValue());
+                System.out.println("product= \""+i.getKey()+"\" / quantity= "+i.getValue());
             }
-
+            System.out.println("-------------------------------------------------------\n");
         }
     }
 
-    public static boolean isNullOrEmptyMap(Map <? , ?> map)
-    {
-        return (map == null || map.isEmpty());
-    }
 }

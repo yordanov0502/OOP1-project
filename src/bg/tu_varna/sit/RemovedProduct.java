@@ -22,7 +22,7 @@ public class RemovedProduct {
                 "\n\t\t\t  manufacturer='" + product.getManufacturer() + '\'' +
                 "\n\t\t\t  unit='" + product.getUnit() + '\'' +
                 "\n\t\t\t  quantity=" + product.getQuantity() +
-                "\n\t\t\t  location" + product.getLocation().fullInfo(getProduct().getQuantity()) +
+                "\n\t\t\t  location" + product.getLocation() +
                 "\n\t\t\t  comment='" + product.getComment() + '\'' +
                 "\n";
     }

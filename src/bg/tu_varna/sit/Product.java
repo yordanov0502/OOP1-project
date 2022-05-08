@@ -1,5 +1,7 @@
 package bg.tu_varna.sit;
 
+import org.joda.time.LocalDate;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
@@ -10,15 +12,15 @@ import java.util.Objects;
 public class Product {
 
     private String productName;   //ime na produkta
-    private org.joda.time.LocalDate expiryDate; //srok na godnost
-    private org.joda.time.LocalDate entryDate;  //data na postupvane v sklada
+    private LocalDate expiryDate; //srok na godnost
+    private LocalDate entryDate;  //data na postupvane v sklada
     private String manufacturer;  //ime na proizvoditel
     private String unit;          //merna edinica
     private double quantity;      //kolichestvo na produkta
     private Location location;    //mestopolojenie na produkta
     private String comment;       //komentar
 
-    public Product(String productName, org.joda.time.LocalDate expiryDate, org.joda.time.LocalDate entryDate, String manufacturer, String unit, double quantity, Location location, String comment) {
+    public Product(String productName, LocalDate expiryDate, LocalDate entryDate, String manufacturer, String unit, double quantity, Location location, String comment) {
         this.productName = productName;
         this.expiryDate = expiryDate;
         this.entryDate = entryDate;
@@ -41,22 +43,22 @@ public class Product {
     }
 
 
-    public org.joda.time.LocalDate getExpiryDate() {
+    public LocalDate getExpiryDate() {
         return expiryDate;
     }
 
 
-    public void setExpiryDate(org.joda.time.LocalDate expiryDate) {
+    public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
     }
 
 
-    public org.joda.time.LocalDate getEntryDate() {
+    public LocalDate getEntryDate() {
         return entryDate;
     }
 
 
-    public void setEntryDate(org.joda.time.LocalDate entryDate) {
+    public void setEntryDate(LocalDate entryDate) {
         this.entryDate = entryDate;
     }
 

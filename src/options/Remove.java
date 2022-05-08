@@ -28,11 +28,10 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
             }
         }
 
-        if(isNullOrEmptyMap(unsortedMap))
+        if(unsortedMap.isEmpty())
         {
             throw new MissingProductException("Product with name \""+productName+"\" doesn't exist in the warehouse!");
         }
-
 
 
         else
@@ -189,11 +188,6 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
         }
      return false;
-    }
-
-    public static boolean isNullOrEmptyMap(Map <? , ?> map)
-    {
-        return (map == null || map.isEmpty());
     }
 
 }

@@ -87,7 +87,6 @@ public class DialogAdd extends JFrame{
         });
     }
 
-    public JPanel getPanelAdd() {return panelAdd;}
 
     public JButton getAddButton() {return addButton;}
 

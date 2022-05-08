@@ -3,21 +3,23 @@ package options;
 import bg.tu_varna.sit.Location;
 import bg.tu_varna.sit.Product;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.joda.time.LocalDate;
 
 public class Clean implements bg.tu_varna.sit.Clean {
 
 
     @Override
-    public void clean(Map<Location,Product> productList) {
-
-        if (productList.isEmpty()) {System.out.println("There are no products in the warehouse!");}
+    public void clean(Map<Location,Product> productList)
+    {
+        if(productList == null || productList.isEmpty()) {System.out.println("There are no products in the warehouse!");}
 
         else
         {
-            org.joda.time.LocalDate currDate = org.joda.time.LocalDate.now(); //Current date
-            Map<Location, Product> cleanedProducts = new HashMap<>();
+            LocalDate currDate = LocalDate.now(); //Current date
+            Map<Location, Product> cleanedProducts = new LinkedHashMap<>();
 
             for (Map.Entry<Location, Product> i : productList.entrySet())
             {
@@ -43,4 +45,5 @@ public class Clean implements bg.tu_varna.sit.Clean {
             }
         }
     }
+
 }

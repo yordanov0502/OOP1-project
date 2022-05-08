@@ -75,11 +75,6 @@ public class DialogRemove extends JFrame{
         return removeButton;
     }
 
-    public JPanel getPanelRemove()
-    {
-        return panelRemove;
-    }
-
     private void preventBreaking()
     {
         name.setTransferHandler(null);

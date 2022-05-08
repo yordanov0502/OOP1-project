@@ -1,8 +1,6 @@
 package bg.tu_varna.sit;
 
-import еxceptions.LocationException;
 import еxceptions.MissingProductException;
-import еxceptions.QuantityException;
 
 import java.util.Map;
 

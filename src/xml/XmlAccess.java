@@ -16,8 +16,8 @@ public class XmlAccess implements bg.tu_varna.sit.XmlAccess {
     public void saveToFile(Warehouse warehouse, String fileName) throws JAXBException
     {
         JAXBContext context = JAXBContext.newInstance(Warehouse.class);
-        Marshaller mar= context.createMarshaller();
-        mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, /*Boolean.TRUE*/true);
+        Marshaller mar = context.createMarshaller();
+        mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         mar.marshal(warehouse, new File(fileName));
     }
 

@@ -2,10 +2,8 @@ package bg.tu_varna.sit;
 
 import dialogs.DialogAdd;
 import dialogs.DialogRemove;
-import dialogs.ValidateDialogRemove;
 import еxceptions.OptionException;
 
-import javax.swing.*;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
@@ -141,15 +139,12 @@ public class GeneralMenu implements Menu {
 
     private void removeProduct()
     {
-        ValidateDialogRemove checkWarehouse = new ValidateDialogRemove();
-
-        if(checkWarehouse.isNullOrEmptyMap(warehouse.getProductList()))
+        if(warehouse.getProductList()==null || warehouse.getProductList().isEmpty())
         {
             System.out.println("There are no products in the warehouse!");
         }
 
         else {DialogRemove dialogRemove = new DialogRemove(warehouse);}
-
     }
 
     ///////////////////

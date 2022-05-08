@@ -3,7 +3,6 @@ package dialogs;
 import еxceptions.*;
 
 import javax.swing.*;
-import java.util.Map;
 import java.util.Objects;
 
 public class ValidateDialogRemove {
@@ -67,11 +66,6 @@ public class ValidateDialogRemove {
             throw new QuantityException("Quantity of product \"" + attributes[0] + "\" should be a positive number!");
         }
 
-    }
-
-    public boolean isNullOrEmptyMap(Map<? , ?> map)
-    {
-        return (map == null || map.isEmpty());
     }
 
 }
