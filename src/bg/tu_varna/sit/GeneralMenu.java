@@ -53,13 +53,12 @@ public class GeneralMenu implements Menu {
         if(parameters.length!=2) {throw new OptionException("Incorrect parameters!");}
 
         OpenFile openFile = new options.OpenFile();
-        String fileName = parameters[1].replace("\"", "");
-        file = fileName;
+        file = parameters[1].replace("\"", "");
 
         boolean flag=true;
         try
         {
-            openFile.open(warehouse, fileName);
+            openFile.open(warehouse, file);
         }
         catch (IOException | JAXBException e)
         {
@@ -67,7 +66,7 @@ public class GeneralMenu implements Menu {
             System.out.println("File has not been found!");
         }
 
-        if(flag) {System.out.println("File has opened successfully.");isFileOpened=true;}
+        if(flag) {System.out.println("File has been opened successfully.");isFileOpened=true;}
     }
 
     private void close()
@@ -106,12 +105,19 @@ public class GeneralMenu implements Menu {
     {
         if(parameters.length!=2) {throw new OptionException("Incorrect parameters!");}
 
-        SaveAs saveAs = new options.SaveAs();
-        String fileName = parameters[1].replace("\"", "");
-        file = fileName;
-        saveAs.saveAs(warehouse, fileName);
-        System.out.println("File has been saved successfully.");
-        isFileOpened=true;
+        if(warehouse.getProductList()==null || warehouse.getProductList().isEmpty())
+        {
+            System.out.println("There's nothing to be saved!");
+        }
+
+        else
+        {
+            SaveAs saveAs = new options.SaveAs();
+            file = parameters[1].replace("\"", "");;
+            saveAs.saveAs(warehouse, file);
+            System.out.println("File has been saved successfully.");
+            isFileOpened = true;
+        }
     }
 
     public void help()

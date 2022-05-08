@@ -76,7 +76,7 @@ public class DialogAdd extends JFrame{
 
                            if(flag)
                            {
-                           JOptionPane.showMessageDialog(addButton, name.getText() + " has been added to the warehouse successfully.");
+                           JOptionPane.showMessageDialog(addButton, "Product \""+name.getText() + "\" has been added to the warehouse successfully.");
                            dispose();
                            }
 
