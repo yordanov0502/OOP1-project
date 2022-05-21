@@ -167,8 +167,7 @@ public class GeneralMenu implements Menu {
            Log log = new options.Log(dates[0],dates[1]);
            log.validateFromDate();
            log.validateToDate();
-
-           if(dates[0].compareTo(dates[1])>0) {throw new OptionException("Incorrect interval of dates!");}
+           log.validateDatesInterval();
 
            log.log(LocalDate.parse(dates[0]),LocalDate.parse(dates[1]), warehouse.getStorageHistory());
         }

@@ -22,6 +22,7 @@ public class Log implements bg.tu_varna.sit.Log {
 
     public Log(){}
 
+    @Override
     public void validateFromDate() throws OptionException
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -35,6 +36,7 @@ public class Log implements bg.tu_varna.sit.Log {
         }
     }
 
+    @Override
     public void validateToDate() throws OptionException
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -46,6 +48,15 @@ public class Log implements bg.tu_varna.sit.Log {
         {
             throw new OptionException("You have entered invalid <to> date!");
         }
+    }
+
+    @Override
+    public void validateDatesInterval() throws OptionException
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        if(java.time.LocalDate.parse(from, formatter).compareTo(java.time.LocalDate.parse(to,formatter))>0)
+        {throw new OptionException("Incorrect interval of dates!");}
     }
 
     @Override
