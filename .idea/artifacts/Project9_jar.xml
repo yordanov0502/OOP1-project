@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Project9:jar">
+    <output-path>$PROJECT_DIR$/LaunchProgram</output-path>
+    <root id="archive" name="Project9.jar">
+      <element id="module-output" name="Project9" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/joda-time-2.10.14.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
