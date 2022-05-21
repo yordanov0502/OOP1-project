@@ -1,5 +1,11 @@
 package bg.tu_varna.sit;
 
+import еxceptions.OptionException;
+
+import java.time.LocalDate;
+
 public interface Log {
-    void log();
+    void validateFromDate() throws OptionException;
+    void validateToDate() throws OptionException;
+    void log(LocalDate from, LocalDate to, StorageHistory storageHistory);
 }

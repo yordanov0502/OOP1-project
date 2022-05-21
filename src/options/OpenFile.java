@@ -14,5 +14,7 @@ public class OpenFile implements bg.tu_varna.sit.OpenFile {
         XmlAccess xmlAccess = new xml.XmlAccess();
         Warehouse loadedWarehouse = xmlAccess.loadFromFile(fileName);
         warehouse.setProductList(loadedWarehouse.getProductList());
+
+        warehouse.setStorageHistory(loadedWarehouse.getStorageHistory());
     }
 }

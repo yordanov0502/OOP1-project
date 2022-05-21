@@ -112,12 +112,12 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return productName.equals(product.productName) && expiryDate.equals(product.expiryDate) && manufacturer.equals(product.manufacturer) && unit.equals(product.unit);
+        return productName.equals(product.productName) && expiryDate.equals(product.expiryDate) && entryDate.equals(product.entryDate) && manufacturer.equals(product.manufacturer) && unit.equals(product.unit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productName, expiryDate, manufacturer, unit);
+        return Objects.hash(productName, expiryDate, entryDate, manufacturer, unit);
     }
 
     @Override

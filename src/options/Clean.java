@@ -6,13 +6,14 @@ import bg.tu_varna.sit.Product;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import bg.tu_varna.sit.StorageHistory;
 import org.joda.time.LocalDate;
 
 public class Clean implements bg.tu_varna.sit.Clean {
 
 
     @Override
-    public void clean(Map<Location,Product> productList)
+    public void clean(Map<Location,Product> productList, StorageHistory storageHistory)
     {
         if(productList == null || productList.isEmpty()) {System.out.println("There are no products in the warehouse!");}
 
@@ -21,11 +22,19 @@ public class Clean implements bg.tu_varna.sit.Clean {
             LocalDate currDate = LocalDate.now(); //Current date
             Map<Location, Product> cleanedProducts = new LinkedHashMap<>();
 
+            java.time.LocalDate currentNormalDate = java.time.LocalDate.now();
+
             for (Map.Entry<Location, Product> i : productList.entrySet())
             {
                 if (currDate.compareTo(i.getValue().getExpiryDate()) > 0 || currDate.compareTo(i.getValue().getExpiryDate().minusDays(7)) >= 0)
                 {
                     cleanedProducts.put(i.getKey(), i.getValue());
+
+                    storageHistory.noteInStorageHistory(currentNormalDate,i.getValue().getQuantity(),storageHistory);
+
+                    /////////
+
+                    ////////
                 }
             }
 

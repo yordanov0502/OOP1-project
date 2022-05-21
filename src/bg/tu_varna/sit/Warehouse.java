@@ -12,7 +12,7 @@ public class Warehouse {
 
     private Map<Location,Product> productList = new LinkedHashMap<>();
 
-    private StorageHistory storageHistory;
+    private StorageHistory storageHistory = new StorageHistory();
 
     public Map<Location,Product> getProductList() {
         return productList;

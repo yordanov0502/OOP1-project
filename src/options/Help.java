@@ -13,7 +13,7 @@ public class Help implements bg.tu_varna.sit.Help {
             "add \t\t\t\t\t\t\tadds a new product to the warehouse in dialog mode",
             "remove\t\t\t\t\t\t\tremoves product from the warehouse in dialog mode",
             "log <from> <to>\t\t\t\t\tprints information about quantity changes in the warehouse between 2 dates",
-            "clean\t\t\t\t\t\t\tcleans all products from the warehouse, which expiry date have passed"
+            "clean\t\t\t\t\t\t\tcleans all products from the warehouse, which expiry date have passed or is about to pass (in 7 days)"
     };
 
     @Override

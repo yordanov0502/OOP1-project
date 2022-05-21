@@ -3,20 +3,22 @@ package options;
 import bg.tu_varna.sit.Location;
 import bg.tu_varna.sit.Product;
 import bg.tu_varna.sit.RemovedProduct;
+import bg.tu_varna.sit.StorageHistory;
 import еxceptions.MissingProductException;
 
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.*;
-
-import org.joda.time.LocalDate;
+import java.util.List;
 
 import javax.swing.*;
 
 public class Remove extends Component implements bg.tu_varna.sit.Remove{
     @Override
-    public boolean remove(String productName, double quantity, Map<Location, Product> productList) throws MissingProductException
+    public boolean remove(String productName, double quantity, Map<Location, Product> productList, StorageHistory storageHistory) throws MissingProductException
     {
-        Map<LocalDate, Product> unsortedMap = new LinkedHashMap<>();
+        List<Product> localList = new ArrayList<>();
+        LocalDate currDate = LocalDate.now(); //Current date
 
         double oldQuantityLastCase=0;
 
@@ -24,11 +26,11 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
         {
             if(i.getValue().getProductName().equals(productName))
             {
-                unsortedMap.put(i.getValue().getExpiryDate(), i.getValue());
+                localList.add(i.getValue());
             }
         }
 
-        if(unsortedMap.isEmpty())
+        if(localList.isEmpty())
         {
             throw new MissingProductException("Product with name \""+productName+"\" doesn't exist in the warehouse!");
         }
@@ -36,21 +38,14 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
         else
         {
-            //https://howtodoinjava.com/java/sort/java-sort-map-by-key/
-
-            //LinkedHashMap preserve the ordering of elements in which they are inserted
-            Map<Location, Product> sortedMap = new LinkedHashMap<>();
-
-            unsortedMap.entrySet()
-                    .stream()
-                    .sorted(Map.Entry.comparingByKey())
-                    .forEachOrdered(x -> sortedMap.put(x.getValue().getLocation(), x.getValue()));
+            localList.sort(Comparator.comparing(Product::getExpiryDate));
 
 
             Map<Location, Product> removedProducts = new LinkedHashMap<>();
 
             RemovedProduct removedProduct =  new RemovedProduct();
             RemovedProduct updatedProduct = new RemovedProduct();
+            RemovedProduct tempProduct = new RemovedProduct();
 
             //flagove za razlichnite situacii po premahvane na produkti
             boolean flag1=false;
@@ -58,21 +53,23 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
             double totalQuantity=0;
 
-            for(Map.Entry<Location, Product> i: sortedMap.entrySet())
+
+            for (Product product : localList)
             {
-                totalQuantity+=i.getValue().getQuantity();
+                totalQuantity += product.getQuantity();
             }
 
 
-
-            for(Map.Entry<Location, Product> i: sortedMap.entrySet())
+            for(Product currProduct : localList)
             {
                 if(!flag1)
                 {
-                    if (quantity == i.getValue().getQuantity())
+                    if (quantity == currProduct.getQuantity())
                     {
-                        removedProduct.setProduct(i.getValue());
-                        productList.remove(i.getKey());
+                        storageHistory.noteInStorageHistory(currDate,currProduct.getQuantity(),storageHistory);
+
+                        removedProduct.setProduct(currProduct);
+                        productList.remove(currProduct.getLocation());
 
                         System.out.println("------------------The following product has been removed from the warehouse------------------");
                         System.out.println(removedProduct.removeInfo());
@@ -81,16 +78,18 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
                         break;
                     }
 
-                    else if (quantity < i.getValue().getQuantity())
+                    else if (quantity < currProduct.getQuantity())
                     {
-                        double oldQuantity=i.getValue().getQuantity();
+                        storageHistory.noteInStorageHistory(currDate,quantity,storageHistory);
+
+                        double oldQuantity = currProduct.getQuantity();
                         double newQuantity = oldQuantity - quantity;
-                        i.getValue().setQuantity(newQuantity);
+                        currProduct.setQuantity(newQuantity);
 
                         //productList.computeIfPresent(i.getKey(), (k, v) -> i.getValue());
-                        productList.put(i.getKey(),i.getValue());
+                        productList.put(currProduct.getLocation(),currProduct);
                         System.out.println("------------------The quantity of the following product has been reduced("+oldQuantity+"->"+newQuantity+")---------------------");
-                        System.out.println(productList.get(i.getKey()).removeInfo());
+                        System.out.println(productList.get(currProduct.getLocation()).removeInfo());
                         System.out.println("---------------------------------------------------------------------------------------------");
 
                         break;
@@ -98,12 +97,13 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
                     else if (quantity == totalQuantity)
                     {
-                        productList.keySet().removeAll(sortedMap.keySet());
+                        productList.keySet().removeAll(transferProducts(localList).keySet());
+                        storageHistory.noteInStorageHistory(currDate,totalQuantity,storageHistory);
 
                         System.out.println("------------------The following products have been removed from the warehouse----------------");
-                        for (Map.Entry<Location, Product> j : sortedMap.entrySet())
+                        for (Product curProduct : localList)
                         {
-                            System.out.println(j.getValue().removeInfo());
+                            System.out.println(curProduct.removeInfo());
                         }
                         System.out.println("---------------------------------------------------------------------------------------------");
 
@@ -112,16 +112,17 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
                     else if (quantity > totalQuantity)
                     {
-                        int response = JOptionPane.showConfirmDialog(this, "The total quantity of the product \""+i.getValue().getProductName()+"\" is " + totalQuantity + "\nHowever, do you want to remove the left quantity?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        int response = JOptionPane.showConfirmDialog(this, "The total quantity of the product \""+currProduct.getProductName()+"\" is " + totalQuantity + "\nHowever, do you want to remove the left quantity?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                         if (response == JOptionPane.YES_OPTION)
                         {
-                            productList.keySet().removeAll(sortedMap.keySet());
+                            productList.keySet().removeAll(transferProducts(localList).keySet());
+                            storageHistory.noteInStorageHistory(currDate,totalQuantity,storageHistory);
 
                             System.out.println("------------------The following products have been removed from the warehouse----------------");
-                            for (Map.Entry<Location, Product> j : sortedMap.entrySet())
+                            for (Product curProduct : localList)
                             {
-                                System.out.println(j.getValue().removeInfo());
+                                System.out.println(curProduct.removeInfo());
                             }
                             System.out.println("---------------------------------------------------------------------------------------------");
                             break;
@@ -134,27 +135,34 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
                 if(flag1)
                 {
+
                     if(quantity>0)
                     {
-                        if(quantity>i.getValue().getQuantity())
+                        if(quantity>currProduct.getQuantity())
                         {
-                            removedProducts.put(i.getKey(),i.getValue());
-                            quantity-=i.getValue().getQuantity();
+                            storageHistory.noteInStorageHistory(currDate,currProduct.getQuantity(),storageHistory);
+
+                            removedProducts.put(currProduct.getLocation(), currProduct);
+                            quantity-=currProduct.getQuantity();
                         }
 
-                        else if(quantity<i.getValue().getQuantity())
+                        else if(quantity<currProduct.getQuantity())
                         {
-                            oldQuantityLastCase=i.getValue().getQuantity();
-                            i.getValue().setQuantity(i.getValue().getQuantity()-quantity);
-                            updatedProduct.setProduct(i.getValue());
+                            storageHistory.noteInStorageHistory(currDate,quantity,storageHistory);
+
+                            oldQuantityLastCase=currProduct.getQuantity();
+                            currProduct.setQuantity(oldQuantityLastCase-quantity);
+                            updatedProduct.setProduct(currProduct);
                             quantity=0;
                             flag2=true;
                             break;
                         }
 
-                        else if(quantity==i.getValue().getQuantity())
+                        else if(quantity==currProduct.getQuantity())
                         {
-                            removedProducts.put(i.getKey(),i.getValue());
+                            storageHistory.noteInStorageHistory(currDate,currProduct.getQuantity(),storageHistory);
+
+                            removedProducts.put(currProduct.getLocation(), currProduct);
                             quantity=0;
                             break;
                         }
@@ -179,7 +187,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
                 {
                     double newQuantity = updatedProduct.getProduct().getQuantity();
                     productList.put(updatedProduct.getProduct().getLocation(),updatedProduct.getProduct());
-                    System.out.println("------------------The quantity of the following product has been reduced("+oldQuantityLastCase+"->"+newQuantity+")---------------------");
+                    System.out.println("------------The quantity of the following product has been reduced("+oldQuantityLastCase+"->"+newQuantity+")-------------");
                     System.out.println(updatedProduct.getProduct().removeInfo());
                     System.out.println("---------------------------------------------------------------------------------------------");
                 }
@@ -189,5 +197,19 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
         }
      return false;
     }
+
+
+
+    private Map<Location,Product> transferProducts(List<Product> localList)
+    {
+        Map<Location, Product> tempMap = new LinkedHashMap<>();
+
+        for(Product currProduct : localList)
+        {
+            tempMap.put(currProduct.getLocation(),currProduct);
+        }
+        return tempMap;
+    }
+
 
 }

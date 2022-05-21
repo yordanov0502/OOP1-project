@@ -3,12 +3,11 @@ package dialogs;
 import bg.tu_varna.sit.Remove;
 import bg.tu_varna.sit.Warehouse;
 import еxceptions.MissingProductException;
-import еxceptions.QuantityException;
+
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
 
 public class DialogRemove extends JFrame{
     private JTextField name;
@@ -45,7 +44,7 @@ public class DialogRemove extends JFrame{
                         boolean optionNo=false;
                         try
                         {
-                            optionNo = remove.remove(name.getText(), Double.parseDouble(quantity.getText()), warehouse.getProductList());
+                            optionNo = remove.remove(name.getText(), Double.parseDouble(quantity.getText()), warehouse.getProductList(), warehouse.getStorageHistory());
                         }
                         catch (MissingProductException customException)
                         {

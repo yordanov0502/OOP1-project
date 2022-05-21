@@ -66,7 +66,7 @@ public class DialogAdd extends JFrame{
                            boolean flag = true;
                            try
                            {
-                               add.add(product, warehouse.getProductList());
+                               add.add(product, warehouse.getProductList(), warehouse.getStorageHistory());
                            }
                            catch (LocationException customException)
                            {

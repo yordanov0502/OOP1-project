@@ -248,7 +248,7 @@
         </constraints>
         <properties>
           <font size="20" style="2"/>
-          <text value="(0-1000)"/>
+          <text value="(0.1-1000)"/>
         </properties>
       </component>
       <component id="c3994" class="javax.swing.JLabel">

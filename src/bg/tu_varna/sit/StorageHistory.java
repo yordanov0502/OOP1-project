@@ -1,50 +1,65 @@
 package bg.tu_varna.sit;
 
-import org.joda.time.LocalDate;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+
+@XmlRootElement(name = "StorageHistory")
+@XmlType(propOrder = { "addedQuantity", "removedQuantity"})
 
 public class StorageHistory {
 
-    private static double addedQuantity = 0;
-    private static double removedQuantity = 0;
-
-    private Map<LocalDate, List<Product>> addedProducts = new LinkedHashMap<>();
-    private Map<LocalDate, List<Product>> removedProducts = new LinkedHashMap<>();
+    private Map<String, Double> addedQuantity = new LinkedHashMap<>();
+    private Map<String, Double> removedQuantity = new LinkedHashMap<>();
 
     public StorageHistory(){}
 
-    public static double getAddedQuantity() {
+    public Map<String, Double> getAddedQuantity() {
         return addedQuantity;
     }
 
-    public static void setAddedQuantity(double addedQuantity) {
-        StorageHistory.addedQuantity = addedQuantity;
+    public void setAddedQuantity(Map<String, Double> addedQuantity) {
+        this.addedQuantity = addedQuantity;
     }
 
-    public static double getRemovedQuantity() {
+    public Map<String, Double> getRemovedQuantity() {
         return removedQuantity;
     }
 
-    public static void setRemovedQuantity(double removedQuantity) {
-        StorageHistory.removedQuantity = removedQuantity;
+    public void setRemovedQuantity(Map<String, Double> removedQuantity) {
+        this.removedQuantity = removedQuantity;
     }
 
-    public Map<LocalDate, List<Product>> getAddedProducts() {
-        return addedProducts;
+    //izpolzvam metoda pri komanda Add
+    public void noteInAddStorageHistory(org.joda.time.LocalDate entryDate,double quantity, StorageHistory storageHistory)
+    {
+        if(storageHistory.getAddedQuantity().containsKey(entryDate.toString()))
+        {
+            double oldQuantity = storageHistory.getAddedQuantity().get(entryDate.toString());
+            storageHistory.getAddedQuantity().put(entryDate.toString(),oldQuantity+quantity);
+        }
+
+        else
+        {
+            storageHistory.getAddedQuantity().put(entryDate.toString(),quantity);
+        }
     }
 
-    public void setAddedProducts(Map<LocalDate, List<Product>> addedProducts) {
-        this.addedProducts = addedProducts;
-    }
+    //izpolzvam metoda pri komanda Clean i Remove
+    public void noteInStorageHistory(LocalDate removedDate, double quantity, StorageHistory storageHistory)
+    {
+        if(storageHistory.getRemovedQuantity().containsKey(removedDate.toString()))
+        {
+            double oldQuantity = storageHistory.getRemovedQuantity().get(removedDate.toString());
+            storageHistory.getRemovedQuantity().put(removedDate.toString(),oldQuantity+quantity);
+        }
 
-    public Map<LocalDate, List<Product>> getRemovedProducts() {
-        return removedProducts;
-    }
-
-    public void setRemovedProducts(Map<LocalDate, List<Product>> removedProducts) {
-        this.removedProducts = removedProducts;
+        else
+        {
+            storageHistory.getRemovedQuantity().put(removedDate.toString(),quantity);
+        }
     }
 }

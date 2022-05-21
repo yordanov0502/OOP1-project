@@ -6,6 +6,7 @@ import еxceptions.OptionException;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class GeneralMenu implements Menu {
 
@@ -153,29 +154,30 @@ public class GeneralMenu implements Menu {
         else {DialogRemove dialogRemove = new DialogRemove(warehouse);}
     }
 
-    private void log(String[] parameters)throws OptionException
+    private void log(String[] parameters) throws OptionException
     {
         if(parameters.length!=2) {throw new OptionException("Incorrect parameters!");}
 
         String[] dates = parameters[1].split(" ");
 
-        if(dates.length!=2) {{throw new OptionException("Incorrect parameters!");}}
-
-         if(warehouse.getProductList()==null || warehouse.getProductList().isEmpty())
-        {
-            System.out.println("There are no products in the warehouse!");
-        }
+        if(dates.length!=2) {throw new OptionException("Incorrect parameters!");}
 
         else
         {
-           System.out.println(dates[0]+" "+dates[1]);//////////////////////////////////
+           Log log = new options.Log(dates[0],dates[1]);
+           log.validateFromDate();
+           log.validateToDate();
+
+           if(dates[0].compareTo(dates[1])>0) {throw new OptionException("Incorrect interval of dates!");}
+
+           log.log(LocalDate.parse(dates[0]),LocalDate.parse(dates[1]), warehouse.getStorageHistory());
         }
     }
 
     private void clean()
     {
         Clean clean = new options.Clean();
-        clean.clean(warehouse.getProductList());
+        clean.clean(warehouse.getProductList(), warehouse.getStorageHistory());
     }
 
 }

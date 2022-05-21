@@ -6,5 +6,5 @@ import java.util.Map;
 
 public interface Add
 {
-    void add(Product product, Map<Location,Product> productList) throws LocationException;
+    void add(Product product, Map<Location,Product> productList,StorageHistory storageHistory) throws LocationException;
 }
