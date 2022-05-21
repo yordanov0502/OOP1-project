@@ -66,7 +66,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
                 {
                     if (quantity == currProduct.getQuantity())
                     {
-                        storageHistory.noteInStorageHistory(currDate,currProduct.getQuantity(),storageHistory);
+                        storageHistory.noteInRemoveStorageHistory(currDate,currProduct.getQuantity(),storageHistory);
 
                         removedProduct.setProduct(currProduct);
                         productList.remove(currProduct.getLocation());
@@ -80,7 +80,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
                     else if (quantity < currProduct.getQuantity())
                     {
-                        storageHistory.noteInStorageHistory(currDate,quantity,storageHistory);
+                        storageHistory.noteInRemoveStorageHistory(currDate,quantity,storageHistory);
 
                         double oldQuantity = currProduct.getQuantity();
                         double newQuantity = oldQuantity - quantity;
@@ -98,7 +98,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
                     else if (quantity == totalQuantity)
                     {
                         productList.keySet().removeAll(transferProducts(localList).keySet());
-                        storageHistory.noteInStorageHistory(currDate,totalQuantity,storageHistory);
+                        storageHistory.noteInRemoveStorageHistory(currDate,totalQuantity,storageHistory);
 
                         System.out.println("------------------The following products have been removed from the warehouse----------------");
                         for (Product curProduct : localList)
@@ -117,7 +117,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
                         if (response == JOptionPane.YES_OPTION)
                         {
                             productList.keySet().removeAll(transferProducts(localList).keySet());
-                            storageHistory.noteInStorageHistory(currDate,totalQuantity,storageHistory);
+                            storageHistory.noteInRemoveStorageHistory(currDate,totalQuantity,storageHistory);
 
                             System.out.println("------------------The following products have been removed from the warehouse----------------");
                             for (Product curProduct : localList)
@@ -140,7 +140,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
                     {
                         if(quantity>currProduct.getQuantity())
                         {
-                            storageHistory.noteInStorageHistory(currDate,currProduct.getQuantity(),storageHistory);
+                            storageHistory.noteInRemoveStorageHistory(currDate,currProduct.getQuantity(),storageHistory);
 
                             removedProducts.put(currProduct.getLocation(), currProduct);
                             quantity-=currProduct.getQuantity();
@@ -148,7 +148,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
                         else if(quantity<currProduct.getQuantity())
                         {
-                            storageHistory.noteInStorageHistory(currDate,quantity,storageHistory);
+                            storageHistory.noteInRemoveStorageHistory(currDate,quantity,storageHistory);
 
                             oldQuantityLastCase=currProduct.getQuantity();
                             currProduct.setQuantity(oldQuantityLastCase-quantity);
@@ -160,7 +160,7 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
                         else if(quantity==currProduct.getQuantity())
                         {
-                            storageHistory.noteInStorageHistory(currDate,currProduct.getQuantity(),storageHistory);
+                            storageHistory.noteInRemoveStorageHistory(currDate,currProduct.getQuantity(),storageHistory);
 
                             removedProducts.put(currProduct.getLocation(), currProduct);
                             quantity=0;

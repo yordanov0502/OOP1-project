@@ -49,7 +49,7 @@ public class StorageHistory {
     }
 
     //izpolzvam metoda pri komanda Clean i Remove
-    public void noteInStorageHistory(LocalDate removedDate, double quantity, StorageHistory storageHistory)
+    public void noteInRemoveStorageHistory(LocalDate removedDate, double quantity, StorageHistory storageHistory)
     {
         if(storageHistory.getRemovedQuantity().containsKey(removedDate.toString()))
         {

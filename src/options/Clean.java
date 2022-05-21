@@ -30,7 +30,7 @@ public class Clean implements bg.tu_varna.sit.Clean {
                 {
                     cleanedProducts.put(i.getKey(), i.getValue());
 
-                    storageHistory.noteInStorageHistory(currentNormalDate,i.getValue().getQuantity(),storageHistory);
+                    storageHistory.noteInRemoveStorageHistory(currentNormalDate,i.getValue().getQuantity(),storageHistory);
 
                     /////////
 
