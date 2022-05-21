@@ -45,7 +45,6 @@ public class Remove extends Component implements bg.tu_varna.sit.Remove{
 
             RemovedProduct removedProduct =  new RemovedProduct();
             RemovedProduct updatedProduct = new RemovedProduct();
-            RemovedProduct tempProduct = new RemovedProduct();
 
             //flagove za razlichnite situacii po premahvane na produkti
             boolean flag1=false;
