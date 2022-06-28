@@ -1,4 +1,4 @@
 Пътя до jar файла трябва да съдържа букви само на латиница!
-Въвеждам през CMD или PowerShell :
+Въвеждате през CMD или PowerShell : java -jar <пътя до jar файла>\Project9.jar
 
-java -jar <пътя до jar файла>\Project9.jar
+Програмта може също да се стартира от папка CLI
